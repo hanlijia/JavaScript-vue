@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>5-3在vue中同时使用过渡和动画</title>
+    <script src="../vue.js"></script>
+    <link rel="stylesheet" href="../node_modules/animate.css/animate.min.css">
+    <style>
+/*  过渡动画transition*/
+        .fade-enter, .fade-leave-to{
+            opacity: 0;
+        }
+        .fade-enter-active, .fade-leave-active{
+            transition: opacity 1s;
+        }
+
+/*vue中css3动画animation的实现*/
+/*        @keyframes bounceIn{
+            0%{
+                transform: scale(0);
+            }
+            50%{
+                transform: scale(1.5);
+            }
+            100%{
+                transform: scale(1);
+            }
+        }
+        .enter{
+            transform-origin: left center;
+            animation: bounceIn 3s;
+        }
+        .leave{
+            transform-origin: left center;
+            animation: bounceIn 3s reverse;
+        }*/
+    </style>
+</head>
+<body>
+    <div id="root">   <!--以下用的是animate.css库里的样式-->
+        <transition
+          name="fade"
+          type="transition"
+          appear
+          enter-active-class="animated bounce fade-enter-active"
+          leave-active-class="animated shake fade-leave-active"
+          appear-active-class="animated bounce fade-enter-active"
+        >
+            <div v-show="show">hello world</div>
+        </transition>
+        <button @click="handleClick">切换</button>
+    </div>
+<script>
+    let vm = new Vue({
+        el: '#root',
+        data: {
+            show: true
+        },
+        methods: {
+            handleClick() {
+                this.show = !this.show
+            }
+        }
+    })
+    // enter-active-class="XXX"  leave-active-class="XXX" 更改了 自定义类名
+    //:duration="{enter:3000,leave:5000}" 和 type="transition" 表示动画多少秒数 F12隐藏和显示  enter入场动画 leave出场动画
+    //:duration = "10000" 10秒
+    //name="fade" 改变默认过渡动画类名v-enter-active => fade-enter-active   v-leave-active=> fade-leave-active
+    //appear 解决默认浏览器 F5刷新 出现 默认为 入场动画效果  =>     appear-active-class="animated bounce fade-enter-active"
+
+    //         enter-active-class="animated bounce fade-enter-active"
+    //         leave-active-class="animated shake fade-leave-active"
+    //         appear-active-class="animated bounce fade-enter-active"
+    //       无论是入场动画效果,出场动画效果,F5刷新动画效果 都同时使用了 animate.css动画库中的 css3动画animation  和 过渡动画transition
+
+    // enter-active-class="enter"           =>5-2在vue中使用animate.css库
+    // leave-active-class="leave"
+</script>
+</body>
+</html>

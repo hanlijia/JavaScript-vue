@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>4-8动态组件与v-once指令</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id = "root">
+        <!--<component :is="type"></component>         &lt;!&ndash;1.动态组件 根据数据里面is的变化 自动的加载不同的组件&ndash;&gt;-->
+        <child-one v-if="type === 'child-one'"></child-one>
+        <child-two v-if="type === 'child-two'"></child-two>
+        <button @click="handleClickBtn">change</button>
+    </div>
+    <script>
+        Vue.component('childOne', {
+            template: '<div v-once>childOne</div>'  //加v-once有效提高静态页的展示性能
+        })
+        Vue.component('childTwo', {
+            template: '<div v-once>childTwo</div>'  //加v-once有效提高静态页的展示性能
+        })
+        let vm = new Vue({
+            el: '#root',
+            data: {
+                type: 'child-one'
+            },
+            methods: {
+                handleClickBtn() {
+                    this.type = this.type === 'child-one' ? 'child-two' : 'child-one'
+                }
+            }
+        })
+
+        //点击按钮切换不同的组件，模拟token. 动态组件 :is=type
+        //v-once 吧之前显示的东西放到内存里面，之后再从内存里面拿出来，一定程度上提高了性能，不用再单独用v-if的时候创建又销毁。
+    </script>
+</body>
+</html>

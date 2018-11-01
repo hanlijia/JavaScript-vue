@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>5-4vue中的js动画与Velocity的结合</title>
+    <script src="../vue.js"></script>
+    <script src="../Velocity/Velocity.js"></script>
+<body>
+    <div id="root">
+        <transition
+        name="fade"
+        @before-enter = "handleBeforeEnter"
+        @enter = "handleEnter"
+        @after-enter = "handleAfterEnter"
+        @before-leave = "handleBeforeLeave"
+        @leave = "handleLeave"
+        @after-leave = "handleAfterLeave"
+        @appear="handleEnter"
+        >
+            <div v-show="show">hello world</div>
+        </transition>
+        <button @click="handleClick">切换</button>
+    </div>
+<script>
+    let vm = new Vue({
+        el: '#root',
+        data: {
+            show: true
+        },
+        methods: {
+            handleClick() {
+                this.show = !this.show
+            },
+            handleBeforeEnter(el) {
+                // el.style.color = "red"
+                el.style.opacity = 0
+            },
+            handleEnter(el, done) {   //el为动画所包裹着的元素， done为回调函数
+/*                setTimeout(() => {
+                    el.style.color = "green"
+                }, 2000)
+                setTimeout(() => {
+                    done()          //执行回调函数，告知这个函数执行完毕
+                }, 4000)*/
+
+                Velocity(el, {opacity: 1}, {duration: 1000, complete: done})
+                //Velocity.js 组件库， duration 耗时多少毫秒， complete 告知回调函数完成
+            },
+            handleAfterEnter(el) {
+                // el.style.color = "#000"
+                alert("动画出现")
+            },
+
+            handleBeforeLeave(el) {
+                el.style.opacity = 1
+            },
+            handleLeave(el, done) {
+                Velocity(el, {opacity: 0}, {duration: 1000, complete: done})
+            },
+            handleAfterLeave(el) {
+                alert("动画离开")
+            }
+        }
+    })
+    //name="fade" 改变默认过渡动画类名v-enter-active => fade-enter-active   v-leave-active=> fade-leave-active
+
+    // @before-enter = "handleBeforeEnter"
+    // @enter = "handleEnter"
+    // @after-enter = "handleAfterEnter
+    //js动画钩子 入场之前钩子  入场实现效果钩子  入场之后钩子
+
+    // @before-leave = "handleBeforeLeave"
+    // @leave = "handleLeave"
+    // @after-leave = "handleAfterLeave"
+    //js动画钩子 出场之前钩子  出场实现效果钩子  出场之后钩子
+
+    // @appear="handleEnter"
+    //F5 刷新钩子 默认为入场实现效果 钩子  => 自创
+</script>
+</body>
+</html>

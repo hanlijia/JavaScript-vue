@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3-5计算属性的setter和getter</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{fullName}}
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data:{
+                firstName: 'han',
+                lastName: 'liJia'
+            },
+            computed: {     // 当你调用插值表达式 读计算属性内容的时候 走get的这个方法   （取=>get）
+                fullName : {
+                    get() {
+                            return this.firstName + " " + this.lastName
+                    },
+                    set(value) {    // set方法接收到外部传进来的一个value (设置=>set) 设置的值接受的到，然后把这个值打印出来
+                        // console.log(value)
+                        let arr = value.split(" ");
+                        this.firstName = arr[0];
+                        this.lastName = arr[1]
+
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

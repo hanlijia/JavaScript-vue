@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3-3vue的模板语法</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>{{name + ' han'}}</div><!--插值表达式内容展示效果 同v-text一模一样  转义输出内容加标签对-->
+        <div v-text="name + ' han'"></div><!--同插值表达式‘{{}}’一样的功能， v-text会转义标签对  转义输出内容加标签对-->
+        <div v-html="name + ' han'" @click="handleClick" :title="name"></div><!--同v-text/插值表达式的区别是  对内容不做任何解析 吧内容显示出来，而v-text会转移标签对  转义输出内容加标签对-->
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                nameOne: "<h1>han</h1>",
+                name: "han"
+            }
+        })
+    </script>
+</body>
+</html>

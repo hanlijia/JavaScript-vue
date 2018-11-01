@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>5-7vue中的动画封装</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <fade :show="show">
+            <div>hello world</div>
+        </fade>
+        <fade :show="show">
+            <h1>hello world</h1>
+        </fade>
+        <button @click="handleClick">切换</button>
+    </div>
+<script>
+    Vue.component('fade', {
+        props: ['show'],
+        template: `<transition
+                     @before-enter = "handleBeforeEnter"
+                     @enter = "handleEnter"
+                     @after-enter="handleAfterEnter"
+                     @appear="handleEnter"
+                     >
+                        <slot v-if ="show"></slot>
+                   </transition>`,
+        methods: {
+            handleBeforeEnter(el) {
+                el.style.color = 'red'
+            },
+            handleEnter(el, done) {
+                setTimeout(() => {
+                    el.style.color = 'green'
+                 }, 2000)
+                setTimeout(() => {
+                    done()
+                }, 4000)
+            },
+            handleAfterEnter(el) {
+               el.style.color= "#000"
+            }
+        }
+    })
+    let vm = new Vue({
+        el: '#root',
+        data: {
+            show: false
+        },
+        methods: {
+            handleClick() {
+                this.show = !this.show
+            }
+        }
+    })
+</script>
+</body>
+</html>

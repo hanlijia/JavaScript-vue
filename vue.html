@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>属性绑定和双向数据绑定</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">  <!-- 挂载点，以下都是模板-->
+        <div :title="title" @click="">hello world</div>
+        姓：<input type="text" v-model="firstName">
+        名：<input type="text" v-model="lastName">
+        <div>{{allName}}</div>
+        <div>{{count}}</div>
+        <p></p>
+        <hr>
+        <div v-if="show">v-if/-show</div>
+        <button @click.stop="buttonClick">点我</button>
+        <ul>
+            <li v-for="(item,index) of arr" :key="index">{{item}}</li>
+        </ul>
+        <hr>
+        <div>
+            <input type="text" v-model="inputValue">
+            <button @click.stop="inputClick">提交</button>
+            <ul>
+                <li v-for="(item, index) of list">{{item}}</li>
+            </ul>
+        </div>
+        <hr>
+        <p>two</p>
+        <div>
+            <input type="text" v-model="inputValueTwo">
+            <button @click.stop="inputClickTwo">提交</button>
+            <ul>
+                <!-- :content = "item" 父组件向子组件传值是通过属性的形式传值-->
+                <todo-item
+                    v-for="(item, index) of second"
+                    :key = "index"
+                    :content = "item"
+                    :index = "index"
+                    @delete = "handleDelete"
+                >
+                </todo-item>
+            </ul>
+        </div>
+    </div>
+    <script>
+        Vue.component('todo-item', {     // Vue的每一个组件是一个小实例
+            props: ['content', 'index'],
+            template: '<li @click.stop = "handleClickD">{{content}}</li>',   // 全局组件  template是模板
+            methods: {
+                handleClickD: function() {
+                    // alert(121)
+                    //console.log(this.index)
+                    this.$emit('delete', this.index)
+                }
+            }
+        })
+
+        // var TodoItem = {                // 局部组件必须通过components注册
+        //     template: '<li>item</li>'
+        // }
+        new Vue({                        // 实例
+            el: "#root",
+            // components: {
+            //     'todo-item': TodoItem
+            // },
+            data: {
+                // content: 'world',
+                firstName: '',
+                lastName: '',
+                count: 0,
+                msg: "hello world",
+                title: "this is hello world",
+                show: true,
+                arr:[1,2,3],
+                list:[],
+                second:[],
+                inputValue: '',
+                inputValueTwo:''
+            },
+            computed: {
+              allName: function () {
+                  return this.firstName + ' ' + this.lastName
+              }
+            },
+            watch: {
+                allName: function () {
+                    this.count++
+                }
+            },
+            methods:{
+                handleClick: function () {
+                    this.content = "love"
+                },
+                buttonClick: function () {
+                    this.show = !this.show
+                },
+                inputClick: function () {
+                    this.list.push(this.inputValue)
+                    this.inputValue = ''
+                },
+                inputClickTwo: function () {
+                    this.second.push(this.inputValueTwo)
+                    this.inputValueTwo = ''
+                },
+                handleDelete (index) {
+                    // alert(index)
+                    this.second.splice(index,1)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

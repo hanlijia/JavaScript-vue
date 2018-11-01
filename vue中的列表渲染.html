@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3-8vue中的列表渲染</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!--<template v-for="(item, index) of list"-->
+             <!--:key="item.id">-->
+            <!--<div >-->
+                <!--{{item.text}}&#45;&#45;&#45;&#45;{{index}}-->
+            <!--</div>-->
+            <!--<span>-->
+                 <!--{{item.text}}-->
+            <!--</span>-->
+        <!--</template>-->
+        <div v-for="(item,key,index) of userInfo">
+            {{item}}---{{key}}---{{index}}
+        </div>
+    </div>
+    <script>
+        // 1.数组列表渲染  吧数组里面列表里面的六个值循环到页面上就叫做列表渲染
+        // let vm = new Vue({
+        //     el: '#app',
+        //     data: {
+        //         list: [{
+        //                id: '011',
+        //                text: 'hello'
+        //             }, {
+        //                 id: '012',
+        //                 text: 'dell'
+        //             }, {
+        //                 id: '013',
+        //                 text: 'meet'
+        //             }, {
+        //                 id: '014',
+        //                 text: 'you'
+        //             }]
+        //     }
+        // })
+
+        // 2.对象的循环 三个值一个item => 值,key => 键，index => 下标；对象更改内容往原数据对象里加一条心内容，可以用改变引用的方法。
+        //     复制粘贴原数据，然后往最后面加一条新数据内容。
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                userInfo:{
+                    name: "Dell",
+                    age: "27",
+                    gender: "male",
+                    salary: "secret"
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

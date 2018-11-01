@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3-4vue计算属性属性,方法和侦听器</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{fullName}}
+        {{age}}
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                firstName: 'han',
+                lastName: 'liJia',
+                fullName: 'han liJia',
+                age: 23
+            },
+            // 3.侦听器watch  和computed计算属性类似，具有缓存机制，如果依赖的变量不发生变化，缓存的值也一直在这里。
+            watch: {
+                firstName () {
+                    console.log("计算了一次")
+                    this.fullName = this.firstName + " " + this.lastName
+                },
+                lastName () {
+                    console.log("计算了一次")
+                    this.fullName = this.firstName + " " + this.lastName
+                }
+            }
+            // // 2.方法 无缓存机制 没有计算属性好  提示：用方法显示fullName的值，在插值表达式中要加括号：fullName(）表示方法。
+            // methods: {
+            //     fullName () {
+            //         console.log("计算了一次")
+            //         return this.firstName + " " + this.lastName
+            //     }
+            // }
+            // 1.计算属性computed 有缓存机制 如果计算属性里面的属性值没有发生改变就缓存了之前的值  值发生了改变就跟着改变了
+            // computed: {
+            //     fullName () {
+            //         console.log("计算了一次")
+            //         return this.firstName + " " + this.lastName
+            //     }
+            // }
+        })
+        // ps:如果一个功能既可以通过watch方法实现，又可以通过computed方法实现，又可以通过methods方法实现的时候，优先考虑通过计算属性computed方法实现
+        //    因为这种方法既简洁同时性能又高。代码简洁。
+
+    </script>
+</body>
+</html>

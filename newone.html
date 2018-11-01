@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>newone</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <css-doodle>
+        :doodle{
+    @grid: 1*1024 / 50vmin;
+    }
+    :container{
+    transform: scale(.18);
+    }
+
+    </css-doodle>
+
+    @supports(display: flex) {
+        section {display: flex;}
+    }
+    如果浏览器支持"display: flex"属性，那么在"section"元素上就运用"display:flex"样式
+
+
+    @supports(display: flex) {
+    section {display: flex;}
+    }
+    这是@support最基本的使用规则
+
+
+    not逻辑声明--排除
+    @supports not （display: flex）{
+        #container div{float: left;}
+    }
+    如果你的浏览器不支持"display: flex"属性，那么你可以使用"float: flex"来替代
+</body>
+</html>

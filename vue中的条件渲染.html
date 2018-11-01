@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3-7vue中的条件渲染</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-if="show">{{message}}</div>  <!--对应的变量值是false 不存在于Dom之上了 一次或两次使用 频率低-->
+        <div v-else>Bye world</div>
+        <!--如果使用v-if 和 v-else两个指令 记得要一起紧贴的使用 中间不能有其它标签阻隔。-->
+
+        <!--<div v-show="show">{{message}}</div> &lt;!&ndash;对应的变量值是false 依然存在于Dom之上 只不过是一个display:none 的形式  经常用&ndash;&gt;-->
+        <hr>
+        <div>
+            <div v-if= "showTwo === 'a'">This is a</div>
+            <div v-else-if= "showTwo === 'b'">This is b</div>
+            <div v-else>This is others</div>
+        </div>
+        <!--如果使用v-if 、 v-else-if 和 v-else三个指令 记得要一起紧贴的使用 中间不能有其它标签阻隔。-->
+        <hr>
+        <div v-if="show">
+          用户名：<input type="text" key="username">
+        </div>
+        <div v-else>
+            邮箱名：<input type="text" key="password">
+        </div>
+        <!--key值是页面上唯一的元素，key值不一样时，vue就不会尝试着去复用以前的标签了。避免复用bug的出现-->
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                show: false,
+                showTwo: "a",
+                message: "hello world"
+            }
+        })
+    </script>
+</body>
+</html>

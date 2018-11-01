@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3-6vue中的样式绑定</title>
+    <script src="./vue.js"></script>
+    <style>
+        .activated{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!--<div id="app">-->
+        <!--<div @click="handleDivClick"-->
+             <!--:class="[activated, activatedOne]"             //2.class和数组相绑定 数组里面的内容代表的是变量 class会显示这个变量对应的内容
+             >
+             <!--:class="{activated: isActivated}" /> // 1.class的对象绑定-->
+            <!--hello world-->
+        <!--</div>-->
+    <!--</div>-->
+        <hr>
+        <div id="app">       <!--style改变样式的功能-->
+            <div :style="[styleObj, {fontSize: '20px'}]" @click="handleDivClickStyle">          <!--内联定义样式有两种方法：对象，数组-->
+                hello world
+            </div>
+        </div>
+
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                // isActivated: false
+                activated: "",
+                activatedOne: "activated-one",
+                styleObj: {
+                    color: 'black'
+                }
+            },
+            methods:{
+                handleDivClick () {
+                    // this.isActivated = !this.isActivated   //取反 => 来回点击实现效果样式切换
+                    // if(this.activated === "activated"){
+                    //     this.activated = ""
+                    // }else{
+                    //     this.activated = "activated"
+                    // }
+                    this.activated = this.activated === "activated" ? "" : "activated"  //  三元表达式简写
+                },
+                handleDivClickStyle () {   //style=>对象styleObj / style => 数组[styleObj, {fontSize: '20px'}]控制颜色改变
+                    this.styleObj.color =   this.styleObj.color === "black" ? "red" : "black"  // 三元表达式简写
+                }
+            }
+        })
+    </script>
+</body>
+</html>

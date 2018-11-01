@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello World</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">{{content}}</div>
+    <script>
+        // 老方法
+        // var dom = document.getElementById('app')
+        // dom.innerHTML = 'hello World'
+        // setTimeout(function () {
+        //     dom.innerHTML = 'bye world'
+        // }, 2000)
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                content: 'hello world'
+            }
+        })
+        setTimeout(function () {
+            app.$data.content = "bye world"
+        }, 2000)
+    </script>
+</body>
+</html>

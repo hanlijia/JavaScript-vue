@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>4-7作用域插槽 数据子组件传父组件  父组件接受子组件数据template加slot-scope</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <child>
+            <template slot-scope="props">              <!-- 作用域插槽 是以template开头和结束 我要从子组件接受的数据都放在props里面 往插槽里面插入模板 h1的形式-->
+               <h1>{{props.item}}-hello</h1>               <!-- 作用域插槽使用：1. 子组件要做循环（数据子组件传父组件）父组件接受数据用template加 slot-scope="props.item"/2. dom结构应该用外部结构传递进来的时候-->
+            </template>
+        </child>
+    </div>
+    <script>
+        Vue.component('child', {
+            data() {
+                return{
+                    list: [1,2,3,4]     //数据在此 子组件传入 ``为多行字符串的语法
+                }
+            },
+            template: `<div>
+                            <ul>
+                                <slot v-for = "item of list" :item="item"></slot>
+                            </ul>
+                        </div>`
+        })
+        let vm = new Vue({
+            el: '#root'
+        })
+    </script>
+</body>
+</html>
